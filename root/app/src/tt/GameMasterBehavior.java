@@ -83,12 +83,13 @@ public class GameMasterBehavior {
         }
         // Use the found action to find the choice to make
         // Return the index
-        if (act != null)
+        if (act != null) {
             for (int i = 0; i < choices.size(); i++) {
                 if (Objects.equals(choices.get(i).action, act))
                     return i;
             }
-        System.out.println("Warning! The GM behavior was unable to find an action. Passing instead...");
+            System.out.println("Warning! The GM behavior was unable to find an action. Passing instead...");
+        }
         return choices.size() - 1;
     }
 

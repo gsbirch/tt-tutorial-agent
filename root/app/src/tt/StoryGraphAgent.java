@@ -45,6 +45,9 @@ public class StoryGraphAgent extends Client {
 	/** Max milliseconds this agent will wait before taking a turn */
 	public final long delay;
 
+	/** The random number generator used to make decisions */
+	private final Random random;
+
 	/** A helpful interface to the used story graph. */
 	public GameMasterBehavior gm;
 	
@@ -60,6 +63,7 @@ public class StoryGraphAgent extends Client {
 	 */
 	private StoryGraphAgent(String url, int port, Random random, long delay) {
 		super("tutorial", "tutorial", null, null, url, port);
+		this.random = random;
 		this.delay = delay;
 	}
 	
@@ -116,6 +120,13 @@ public class StoryGraphAgent extends Client {
 	
 	@Override
 	protected int onChoice(Status status) {
+		try {
+			if(delay > 0)
+				Thread.sleep(random.nextLong(2000) + 1000);
+		}
+		catch(InterruptedException exception) {
+			// If interrupted, return choice immediately.
+		}
 		if (getRole() == Role.GAME_MASTER) {
 			if (isProposal(status))
 				return gm.allowProposal(cleanHistory(), getRole(), getHistory().get(getHistory().size() - 1));
