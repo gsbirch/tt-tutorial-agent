@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import edu.uky.cs.nil.sg.Node;
 import edu.uky.cs.nil.sg.StoryGraph;
 import edu.uky.cs.nil.tt.Role;
+import edu.uky.cs.nil.tt.world.Constant;
 import edu.uky.cs.nil.tt.world.State;
 import edu.uky.cs.nil.tt.world.Turn;
 import edu.uky.cs.nil.tt.world.Value;
@@ -51,6 +52,8 @@ public class PlayerBehavior {
         coffeeLoc = world.getVariable(COFFEE_LOCATION);
         teaLoc = world.getVariable(TEA_LOCATION);
         baristaVal = world.getEntity(BARISTA_VALUE);
+        // for (var e : world.getEntities()) System.out.println(e);
+        
     }
 
     public edu.uky.cs.nil.sg.Action ttTosgAction(edu.uky.cs.nil.tt.world.Action ttAction) {
@@ -92,22 +95,23 @@ public class PlayerBehavior {
     }
 
     public Node getToState(List<Turn> history, State state) {
-        // System.out.print("The previous actions are: ");
-        // for (var act : history) {
-        //     System.out.print(act.action + ", ");
-        // }
-        // System.out.println("");
+        System.out.print("The previous actions are: ");
+        for (var act : history) {
+            System.out.print(act.action + ", ");
+        }
+        System.out.println("");
         List<edu.uky.cs.nil.sg.Action> sgActions = history.stream().map(this::findAction).collect(Collectors.toCollection(ArrayList::new));
         // Fix the history:
         // If the barista brewed anything while the player was outside,
         // They "don't know the barista brewed anything"
         // So those actions needed to added manually
-        // System.out.println(coffeeLoc);
-        // System.out.println(state.get(coffeeLoc));
-        if (!state.get(coffeeLoc).equals(null) && !sgActions.contains(findActionSG(BREW_COFFEE))) {
+        // System.out.println(teaLoc);
+        // System.out.println(state.get(teaLoc));
+        // System.out.println(state.get(teaLoc).equals(Constant.NULL));
+        if (!state.get(coffeeLoc).equals(Constant.NULL) && !sgActions.contains(findActionSG(BREW_COFFEE))) {
             sgActions.add(0, findActionSG(BREW_COFFEE));
         }
-        if (!state.get(teaLoc).equals(null) && !sgActions.contains(findActionSG(BREW_TEA))) {
+        if (!state.get(teaLoc).equals(Constant.NULL) && !sgActions.contains(findActionSG(BREW_TEA))) {
             sgActions.add(0, findActionSG(BREW_TEA));
         }
 
@@ -148,6 +152,7 @@ public class PlayerBehavior {
                 // break;
             }
         }
+        // System.out.println();
         // Use the found action to find the choice to make
         // Return the index
         if (act != null)
