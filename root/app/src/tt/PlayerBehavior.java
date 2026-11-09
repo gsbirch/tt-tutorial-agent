@@ -95,11 +95,11 @@ public class PlayerBehavior {
     }
 
     public Node getToState(List<Turn> history, State state) {
-        System.out.print("The previous actions are: ");
-        for (var act : history) {
-            System.out.print(act.action + ", ");
-        }
-        System.out.println("");
+        // System.out.print("The previous actions are: ");
+        // for (var act : history) {
+        //     System.out.print(act.action + ", ");
+        // }
+        // System.out.println("");
         List<edu.uky.cs.nil.sg.Action> sgActions = history.stream().map(this::findAction).collect(Collectors.toCollection(ArrayList::new));
         // Fix the history:
         // If the barista brewed anything while the player was outside,

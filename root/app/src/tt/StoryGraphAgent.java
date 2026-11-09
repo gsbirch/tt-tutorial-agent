@@ -3,9 +3,7 @@ package tt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.io.File;
 
-import edu.uky.cs.nil.sg.StoryGraph;
 import edu.uky.cs.nil.tt.*;
 import edu.uky.cs.nil.tt.io.*;
 import edu.uky.cs.nil.tt.world.*;
