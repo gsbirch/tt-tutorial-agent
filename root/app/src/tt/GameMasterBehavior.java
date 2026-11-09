@@ -2,6 +2,7 @@ package tt;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 import edu.uky.cs.nil.sg.Node;
 import edu.uky.cs.nil.sg.StoryGraph;
@@ -84,9 +85,10 @@ public class GameMasterBehavior {
         // Return the index
         if (act != null)
             for (int i = 0; i < choices.size(); i++) {
-                if (choices.get(i).action.equals(act))
+                if (Objects.equals(choices.get(i).action, act))
                     return i;
             }
+        System.out.println("Warning! The GM behavior was unable to find an action. Passing instead...");
         return choices.size() - 1;
     }
 

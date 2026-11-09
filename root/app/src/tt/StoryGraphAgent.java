@@ -27,12 +27,6 @@ import edu.uky.cs.nil.tt.world.*;
  */
 public class StoryGraphAgent extends Client {
 	
-	/** Probability that this agent will pass control to its partner */
-	private static final double PASS_PROBABILITY = 0.3;
-	
-	/** Probability that this agent will agree to a proposed joint action */
-	private static final double SUCCEED_PROBABILITY = 0.8;
-	
 	/** The default server URL used if none is provided */
 	public static final String DEFAULT_URL = "localhost";
 	
@@ -50,9 +44,6 @@ public class StoryGraphAgent extends Client {
 	
 	/** Max milliseconds this agent will wait before taking a turn */
 	public final long delay;
-	
-	/** The random number generator used to make decisions */
-	private final Random random;
 
 	/** A helpful interface to the used story graph. */
 	public GameMasterBehavior gm;
@@ -69,7 +60,6 @@ public class StoryGraphAgent extends Client {
 	 */
 	private StoryGraphAgent(String url, int port, Random random, long delay) {
 		super("tutorial", "tutorial", null, null, url, port);
-		this.random = random;
 		this.delay = delay;
 	}
 	

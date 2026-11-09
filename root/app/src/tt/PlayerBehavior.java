@@ -3,6 +3,7 @@ package tt;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import edu.uky.cs.nil.sg.Node;
@@ -151,9 +152,10 @@ public class PlayerBehavior {
         // Return the index
         if (act != null)
             for (int i = 0; i < choices.size(); i++) {
-                if (choices.get(i).action.equals(act))
+                if (Objects.equals(choices.get(i).action, act))
                     return i;
             }
+        System.out.println("Warning! The player behavior was unable to find an action. Passing instead...");
         return choices.size() - 1;
     }
 
