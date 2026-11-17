@@ -14,7 +14,7 @@ public class TutorialAgentFactory extends ClientFactory {
     private final int port;
     
     /**
-     * Creates a new story graph agent factory that connects to a Tandem Tales server
+     * Creates a new tutorial agent factory that connects to a Tandem Tales server
      * on the given URL and port number.
      * 
      * @param url the URL of the server
