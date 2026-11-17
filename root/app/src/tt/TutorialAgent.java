@@ -9,30 +9,25 @@ import edu.uky.cs.nil.tt.io.*;
 import edu.uky.cs.nil.tt.world.*;
 
 /**
- * A Tandem Tales agent that makes random choices. This agent can play as either
- * role, in any story world, and with any partner.
- * <p>
- * This agent follows a simple process when making its choices. When choosing a
- * turn, the agent has a {@link #PASS_PROBABILITY} chance to pass control to its
- * partner. If it does not pass, it chooses a non-pass action uniformly at
- * random. There is one exception to this rule. When this agent has to decide on
- * a joint action proposed by its partner, it has a {@link SUCCEED_PROBABILITY}
- * chance of letting the action succeed.
- * <p>
- * This agent waits a random number of milliseconds up to {@link #delay} to give
- * the impression that it is thinking. If the delay is set to 0, the agent will
- * take turns with no delay.
+ * A Tandem Tales agent that plays the totirla. This agent can play as either
+ * role. It defers to {@link PlayerBevhavior} and {@link GameMasterBehavior}
+ * when playing as the Player and Game Master respectively.
+ * 
+ * Both of these behaviors depend on a story graph to inform the next action.
  */
 public class TutorialAgent extends Client {
 	
 	/** The default server URL used if none is provided */
-	public static final String DEFAULT_URL = "localhost";
+	public static final String DEFAULT_URL = "tandemtales.net";
 	
 	/** The default network port used if none is provided */
 	public static final int DEFAULT_PORT = Client.DEFAULT_PORT;
 	
 	/** The default delay if none is provided */
-	private static final long DEFAULT_DELAY = 5000;
+	private static final long DEFAULT_DELAY = 2000;
+
+	/** Always delay for at least one second. */
+	private static final long ONE_SECOND = 1000;
 	
 	/** The ID number of the next agent to be created */
 	private static int nextID = 0;
@@ -46,17 +41,18 @@ public class TutorialAgent extends Client {
 	/** The random number generator used to make decisions */
 	private final Random random;
 
-	/** A helpful interface to the used story graph. */
+	/** Used to determine the Game Master's next action. */
 	public GameMasterBehavior gm;
 	
+	/** Used to determine the Player's next action. */
 	public PlayerBehavior p;
 	
 	/**
-	 * Creates a new random agent with the given settings.
+	 * Creates a new tutorial agent with the given settings.
 	 * 
 	 * @param url the URL of the server to connect to
 	 * @param port the network port to connect to the server on
-	 * @param random the pseudo-random number generator used to make decisions
+	 * @param random the pseudo-random number generator used to decide how long to wait
 	 * @param delay the max milliseconds to wait before taking a turn
 	 */
 	private TutorialAgent(String url, int port, Random random, long delay) {
@@ -66,20 +62,7 @@ public class TutorialAgent extends Client {
 	}
 	
 	/**
-	 * Creates a new random agent with the given settings.
-	 * 
-	 * @param url the URL of the server to connect to
-	 * @param port the network port to connect to the server on
-	 * @param seed the seed used by the pseudo-random number generator that
-	 * makes decisions
-	 * @param delay the max milliseconds to wait before taking a turn
-	 */
-	public TutorialAgent(String url, int port, long seed, long delay) {
-		this(url, port, new Random(seed), delay);
-	}
-	
-	/**
-	 * Creates a new random agent with a random starting seed and the {@link
+	 * Creates a new tutorial agent with a random starting seed and the {@link
 	 * #DEFAULT_DELAY default delay} time.
 	 * 
 	 * @param url the URL of the server to connect to
@@ -87,14 +70,6 @@ public class TutorialAgent extends Client {
 	 */
 	public TutorialAgent(String url, int port) {
 		this(url, port, new Random(), DEFAULT_DELAY);
-	}
-	
-	/**
-	 * Creates a new random agent with a random starting seed and default
-	 * settings.
-	 */
-	public TutorialAgent() {
-		this(DEFAULT_URL, DEFAULT_PORT, new Random(), DEFAULT_DELAY);
 	}
 	
 	@Override
@@ -118,31 +93,46 @@ public class TutorialAgent extends Client {
 	
 	@Override
 	protected int onChoice(Status status) {
+		// Sleep for a few seconds.
+		// The tutorial is much easier to do when the computer
+		// doesn't act instantly
 		try {
 			if(delay > 0)
-				Thread.sleep(random.nextLong(2000) + 1000);
+				Thread.sleep(random.nextLong(delay) + ONE_SECOND);
 		}
 		catch(InterruptedException exception) {
 			// If interrupted, return choice immediately.
 		}
 		if (getRole() == Role.GAME_MASTER) {
+			// Decide whether to allow the proposal (if it is one.)
 			if (isProposal(status))
 				return gm.allowProposal(cleanHistory(), getRole(), getHistory().get(getHistory().size() - 1));
+			// Defer to the Story Graph to determine the next action.
 			int toTake = gm.recommendAction(cleanHistory(), getRole(), getChoices());
 			return toTake;
 		} 
 		else if (getRole() == Role.PLAYER) {
+			// Decide whether to allow the proposal (if it is one.)
 			if (isProposal(status))
 				return p.allowProposal(cleanHistory(), getRole(), getHistory().get(getHistory().size() - 1), getState());
+			// Defer to the Story Graph to determine the next action.
 			int toTake = p.recommendAction(cleanHistory(), getRole(), getChoices(), getState());
 			return toTake;
 		}
+		// This code should never be reached.
 		return getChoices().size() - 1;
 	}
 
+	/**
+	 * A helper function that returns the history with all "passes" and 
+	 * "failed actions" removed. This leaves a list of only actions that
+	 * actually happened.
+	 * @return the list of actions that happened in the story
+	 */
 	private List<Turn> cleanHistory() {
 		List<Turn> clean = new ArrayList<Turn>();
 		for (var t : getHistory()) {
+			// We only get actions that are "successes."
 			if (t.type.equals(Turn.Type.SUCCEED)) {
 				clean.add(t);
 			}
