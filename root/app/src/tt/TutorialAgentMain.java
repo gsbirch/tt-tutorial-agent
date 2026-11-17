@@ -6,7 +6,7 @@ import edu.uky.cs.nil.tt.Arguments;
  * The main entry point for this Tandem Tales agent. This class includes the
  * {@link #main(String[]) main method} to launch the agent factory.
  */
-public class StoryGraphAgentMain {
+public class TutorialAgentMain {
 	
 	/** The name of this agent */
 	public static final String NAME = "Tandem Tales Story Graph Agent (Java)";
@@ -32,8 +32,8 @@ public class StoryGraphAgentMain {
 	/** Instructions for how to use this agent */
 	public static final String USAGE = 
 		rpad("-" + HELP_KEY) + "Print usage information.\n" +
-		rpad("-" + URL_KEY + " <string>") + "Specifies the URL of the server (defaults to \"" + StoryGraphAgent.DEFAULT_URL + "\").\n" +
-		rpad("-" + PORT_KEY + " <number>") + "Specifies the network port of the server (defaults to " + StoryGraphAgent.DEFAULT_PORT + ").";
+		rpad("-" + URL_KEY + " <string>") + "Specifies the URL of the server (defaults to \"" + TutorialAgent.DEFAULT_URL + "\").\n" +
+		rpad("-" + PORT_KEY + " <number>") + "Specifies the network port of the server (defaults to " + TutorialAgent.DEFAULT_PORT + ").";
 	
 	private static final String rpad(String string) {
 		return String.format("%-16s", string);
@@ -56,23 +56,23 @@ public class StoryGraphAgentMain {
 			return;
 		}
 		// Network Settings
-		String url = arguments.getValue(URL_KEY, StoryGraphAgent.DEFAULT_URL);
+		String url = arguments.getValue(URL_KEY, TutorialAgent.DEFAULT_URL);
 		if(url == null)
-			url = StoryGraphAgent.DEFAULT_URL;
+			url = TutorialAgent.DEFAULT_URL;
 		int port;
 		if(arguments.contains(PORT_KEY))
-			port = Integer.parseInt(arguments.getValue(PORT_KEY, Integer.toString(StoryGraphAgent.DEFAULT_PORT)));
+			port = Integer.parseInt(arguments.getValue(PORT_KEY, Integer.toString(TutorialAgent.DEFAULT_PORT)));
 		else
-			port = StoryGraphAgent.DEFAULT_PORT;
+			port = TutorialAgent.DEFAULT_PORT;
 		// Check for unused arguments.
 		arguments.checkUnused();
 		// Create Agent Factory
-		try(StoryGraphAgentFactory factory = new StoryGraphAgentFactory(url, port)) {
+		try(TutorialAgentFactory factory = new TutorialAgentFactory(url, port)) {
 			factory.call();
 		}
 	}
 	
-	private StoryGraphAgentMain() {
+	private TutorialAgentMain() {
 		// This object cannot be instantiated.
 	}
 }

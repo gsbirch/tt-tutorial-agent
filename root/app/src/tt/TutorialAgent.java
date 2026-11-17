@@ -23,7 +23,7 @@ import edu.uky.cs.nil.tt.world.*;
  * the impression that it is thinking. If the delay is set to 0, the agent will
  * take turns with no delay.
  */
-public class StoryGraphAgent extends Client {
+public class TutorialAgent extends Client {
 	
 	/** The default server URL used if none is provided */
 	public static final String DEFAULT_URL = "localhost";
@@ -59,7 +59,7 @@ public class StoryGraphAgent extends Client {
 	 * @param random the pseudo-random number generator used to make decisions
 	 * @param delay the max milliseconds to wait before taking a turn
 	 */
-	private StoryGraphAgent(String url, int port, Random random, long delay) {
+	private TutorialAgent(String url, int port, Random random, long delay) {
 		super("tutorial", "tutorial", null, null, url, port);
 		this.random = random;
 		this.delay = delay;
@@ -74,7 +74,7 @@ public class StoryGraphAgent extends Client {
 	 * makes decisions
 	 * @param delay the max milliseconds to wait before taking a turn
 	 */
-	public StoryGraphAgent(String url, int port, long seed, long delay) {
+	public TutorialAgent(String url, int port, long seed, long delay) {
 		this(url, port, new Random(seed), delay);
 	}
 	
@@ -85,7 +85,7 @@ public class StoryGraphAgent extends Client {
 	 * @param url the URL of the server to connect to
 	 * @param port the network port to connect to the server on
 	 */
-	public StoryGraphAgent(String url, int port) {
+	public TutorialAgent(String url, int port) {
 		this(url, port, new Random(), DEFAULT_DELAY);
 	}
 	
@@ -93,7 +93,7 @@ public class StoryGraphAgent extends Client {
 	 * Creates a new random agent with a random starting seed and default
 	 * settings.
 	 */
-	public StoryGraphAgent() {
+	public TutorialAgent() {
 		this(DEFAULT_URL, DEFAULT_PORT, new Random(), DEFAULT_DELAY);
 	}
 	

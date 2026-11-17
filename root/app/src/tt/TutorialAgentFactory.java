@@ -3,9 +3,9 @@ package tt;
 import edu.uky.cs.nil.tt.ClientFactory;
 
 /**
- * A factory that continuously creates {@link StoryGraphAgent}s as needed.
+ * A factory that continuously creates {@link TutorialAgent}s as needed.
  */
-public class StoryGraphAgentFactory extends ClientFactory {
+public class TutorialAgentFactory extends ClientFactory {
     
     /** The URL of the server */
     private final String url;
@@ -20,7 +20,7 @@ public class StoryGraphAgentFactory extends ClientFactory {
      * @param url the URL of the server
      * @param port the port number of the server
      */
-    public StoryGraphAgentFactory(String url, int port) {
+    public TutorialAgentFactory(String url, int port) {
         this.url = url;
         this.port = port;
     }
@@ -36,8 +36,8 @@ public class StoryGraphAgentFactory extends ClientFactory {
     }
     
     @Override
-    protected StoryGraphAgent create() {
-        return new StoryGraphAgent(url, port);
+    protected TutorialAgent create() {
+        return new TutorialAgent(url, port);
     }
     
     @Override
