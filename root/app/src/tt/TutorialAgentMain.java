@@ -9,10 +9,10 @@ import edu.uky.cs.nil.tt.Arguments;
 public class TutorialAgentMain {
 	
 	/** The name of this agent */
-	public static final String NAME = "Tandem Tales Story Graph Agent (Java)";
+	public static final String NAME = "Tandem Tales Tutorial Agent";
 	
 	/** The version number of this agent */
-	public static final String VERSION = "0.9.0";
+	public static final String VERSION = "1.0.0";
 	
 	/** The authors of this agent */
 	public static final String AUTHORS = "Gage Birchmeier";
