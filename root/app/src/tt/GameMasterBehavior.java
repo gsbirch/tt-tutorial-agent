@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import edu.uky.cs.nil.sg.Node;
 import edu.uky.cs.nil.sg.StoryGraph;
-import edu.uky.cs.nil.tt.Role;
 import edu.uky.cs.nil.tt.world.Turn;
 
 /**
