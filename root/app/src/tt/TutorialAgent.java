@@ -95,7 +95,7 @@ public class TutorialAgent extends Client {
 	protected int onChoice(Status status) {
 		// Sleep for a few seconds.
 		// The tutorial is much easier to do when the computer
-		// doesn't act instantly
+		// doesn't act instantly.
 		try {
 			if(delay > 0)
 				Thread.sleep(random.nextLong(delay) + ONE_SECOND);
