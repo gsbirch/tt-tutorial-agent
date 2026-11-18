@@ -24,7 +24,7 @@ warning because the traffic is encrypted with a self-signed certificate. It is
 safe to ignore this warning because everything is running locally on your
 computer.
 
-This agent can also be ran alone, typically to connect to the [Tandem Tales Website](https://tandemtales.net/).
+This agent can also be ran alone; typically to connect to the [Tandem Tales Website](https://tandemtales.net/).
 ```
 docker build -t tt-tutorial-agent .
 docker run tt-tutorial-agent
@@ -38,10 +38,10 @@ The tutorial agent defers to one of two classes, based on the role the agen will
 - The [Player Behavior](/root/app/src/tt/PlayerBehavior.java), which loads the [Player Story Graph](/root/app/tutorial-player.zip)
 
 When the agent must choose an action to take, it takes the following general steps (with some differences noted later):
-1. Uses the previous turns in [getHistory()](https://sgware.com/tt-client-java/edu/uky/cs/nil/tt/Client.html#getHistory()) to find the [Story Graph State](https://sgware.com/story-graph/edu/uky/cs/nil/sg/State.html) in the [Story Graph](https://sgware.com/story-graph/edu/uky/cs/nil/sg/StoryGraph.html) corresponding to the current state of the world
+1. Uses the previous turns in [getHistory()](https://sgware.com/tt-client-java/edu/uky/cs/nil/tt/Client.html#getHistory()) to find the [Story Graph State](https://sgware.com/story-graph/edu/uky/cs/nil/sg/State.html) in the [Story Graph](https://sgware.com/story-graph/edu/uky/cs/nil/sg/StoryGraph.html) corresponding to the current state of the world.
 2. Scans that state's [Temporal Edges'](https://sgware.com/story-graph/edu/uky/cs/nil/sg/TemporalEdge.html) [labels](https://sgware.com/story-graph/edu/uky/cs/nil/sg/TemporalEdge.html#label) to find a [Story Graph Action](https://sgware.com/story-graph/edu/uky/cs/nil/sg/Action.html) that the agent can propose. For the player, this is an action they can consent to. For the game master, this is any action that is not only for the player.
 3. If no action is present, the agent passes their turn.
-4. If there is an action present, the agent finds the corresponding [Tandem Tales Action](https://sgware.com/tt-server/edu/uky/cs/nil/tt/world/Action.html) for that [Story Graph Action](https://sgware.com/story-graph/edu/uky/cs/nil/sg/Action.html), and returns the index for that action within [getChoices()](https://sgware.com/tt-server/edu/uky/cs/nil/tt/Agent.html#getChoices())
+4. If there is an action present, the agent finds the corresponding [Tandem Tales Action](https://sgware.com/tt-server/edu/uky/cs/nil/tt/world/Action.html) for that [Story Graph Action](https://sgware.com/story-graph/edu/uky/cs/nil/sg/Action.html), and returns the index for that action within [getChoices()](https://sgware.com/tt-server/edu/uky/cs/nil/tt/Agent.html#getChoices()).
 
 When the agent must choose whether to accept a propsed [Tandem Tales Action](https://sgware.com/tt-server/edu/uky/cs/nil/tt/world/Action.html), it takes the following general steps:
 1. Uses the previous turns in [getHistory()](https://sgware.com/tt-client-java/edu/uky/cs/nil/tt/Client.html#getHistory()) to find the [Story Graph State](https://sgware.com/story-graph/edu/uky/cs/nil/sg/State.html) in the [Story Graph](https://sgware.com/story-graph/edu/uky/cs/nil/sg/StoryGraph.html) corresponding to the current state of the world.
@@ -57,7 +57,7 @@ The [Game Master Behavior](/root/app/src/tt/GameMasterBehavior.java) is straight
 
 The [Player Behavior](/root/app/src/tt/PlayerBehavior.java) is also straightforward. When given the chance to take a turn, the agent will choose to walk into the shop then order tea. Once the game master brews tea, the agent will always offer their money for the tea when given the chance to take a turn (until they have either). The player rejects any proposals that involve coffee. They will not leave the shop until they have received the tea and paid for it.
 
-When the player finds the corresponding Story Graph State for the current state of the world, they must make a special consideration. If the game master brews a drink when the agent is outside of the shop, [getHistory()](https://sgware.com/tt-client-java/edu/uky/cs/nil/tt/Client.html#getHistory()) will not list the brew actions, as the agent didn't "see" it happen. However, they know whether the drinks have been brewed once they enter the shop. Thus, if the agent did not see the brew actions but sees one or both of the drinks, they will assume the corresponding brew actions happened before they entered the shop.
+When the player finds the corresponding [Story Graph State](https://sgware.com/story-graph/edu/uky/cs/nil/sg/State.html) for the current state of the world, they must make a special consideration. If the game master brews a drink when the agent is outside of the shop, [getHistory()](https://sgware.com/tt-client-java/edu/uky/cs/nil/tt/Client.html#getHistory()) will not list the brew action, as the agent didn't "see" it happen. However, they know whether the drinks have been brewed once they enter the shop. Thus, if the agent did not see the brew actions but sees one or both of the drinks, they will assume the corresponding brew actions happened before they entered the shop.
 
 ## Version History
 
