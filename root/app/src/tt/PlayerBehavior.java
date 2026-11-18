@@ -233,6 +233,7 @@ public class PlayerBehavior {
      * @return 0 if the propsal should be accepted, 1 otherwise
      */
     public int allowProposal(List<Turn> history, Turn proposal, State state) {
+        // Get the node in the graph for the current state.
         Node n = getToState(history, state);
         // We only accept actions that are in the state graph.
         for (var edge : n.edges.temporal) {
