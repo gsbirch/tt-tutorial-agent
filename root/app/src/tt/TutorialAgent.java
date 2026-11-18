@@ -88,7 +88,7 @@ public class TutorialAgent extends Client {
 		if (getRole() == Role.GAME_MASTER)
 			gm = new GameMasterBehavior("tutorial-game-master.zip", world.getActions());
 		if (getRole() == Role.PLAYER)
-			p = new PlayerBehavior("tutorial-player.zip", world.getActions(), world);
+			p = new PlayerBehavior("tutorial-player.zip", world);
 	}
 	
 	@Override
@@ -114,9 +114,9 @@ public class TutorialAgent extends Client {
 		else if (getRole() == Role.PLAYER) {
 			// Decide whether to allow the proposal (if it is one.)
 			if (isProposal(status))
-				return p.allowProposal(cleanHistory(), getRole(), getHistory().get(getHistory().size() - 1), getState());
+				return p.allowProposal(cleanHistory(), getHistory().get(getHistory().size() - 1), getState());
 			// Defer to the Story Graph to determine the next action.
-			int toTake = p.recommendAction(cleanHistory(), getRole(), getChoices(), getState());
+			int toTake = p.recommendAction(cleanHistory(), getChoices(), getState());
 			return toTake;
 		}
 		// This code should never be reached.
