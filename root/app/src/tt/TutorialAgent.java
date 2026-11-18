@@ -106,9 +106,9 @@ public class TutorialAgent extends Client {
 		if (getRole() == Role.GAME_MASTER) {
 			// Decide whether to allow the proposal (if it is one.)
 			if (isProposal(status))
-				return gm.allowProposal(cleanHistory(), getRole(), getHistory().get(getHistory().size() - 1));
+				return gm.allowProposal(cleanHistory(), getHistory().get(getHistory().size() - 1));
 			// Defer to the Story Graph to determine the next action.
-			int toTake = gm.recommendAction(cleanHistory(), getRole(), getChoices());
+			int toTake = gm.recommendAction(cleanHistory(), getChoices());
 			return toTake;
 		} 
 		else if (getRole() == Role.PLAYER) {
