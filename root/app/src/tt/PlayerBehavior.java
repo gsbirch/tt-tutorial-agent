@@ -18,13 +18,17 @@ import edu.uky.cs.nil.tt.world.World;
 
 /**
  * This class provides the behavior of the player tutorial agent.
- * It uses a specially created story graph that has exactly one player
- * action for each possible state. Using the list of previous actions,
- * this behavior finds the correct state and suggests the appropriate 
+ * It uses a specially created story graph that has usually has exactly 
+ * one player action for each possible state. Using the list of previous 
+ * actions, this behavior finds the correct state and suggests the appropriate 
  * next action.
+ * 
+ * Sometimes there is more than one action, this is to incorporate any actions the
+ * player may consent to if the GM proposes them. For example, if the Barista just
+ * offers the tea before payment, the player will accept.
  */
 public class PlayerBehavior {
-    /** The story graph used to find the next action to take.  */
+    /** The story graph used to find the next action to take. */
     public StoryGraph sg;
 
     /** The world object. */
