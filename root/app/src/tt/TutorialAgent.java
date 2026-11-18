@@ -18,7 +18,7 @@ import edu.uky.cs.nil.tt.world.*;
 public class TutorialAgent extends Client {
 	
 	/** The default server URL used if none is provided */
-	public static final String DEFAULT_URL = "tandemtales.net";
+	public static final String DEFAULT_URL = "localhost";
 	
 	/** The default network port used if none is provided */
 	public static final int DEFAULT_PORT = Client.DEFAULT_PORT;
